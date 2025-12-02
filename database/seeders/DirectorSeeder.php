@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Director;
 
 class DirectorSeeder extends Seeder
 {
@@ -12,6 +12,20 @@ class DirectorSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Director::create([
+            'name' => 'Mario Rossi',
+        ]);
+
+        Director::create([
+            'name' => 'Giulia Bianchi',
+        ]);
+
+        Director::create([
+            'name' => 'Luca Verdi',
+        ]);
+
+        Director::create([
+            'name' => 'Anna Neri',
+        ]);
     }
 }

@@ -28,9 +28,9 @@ class Movie extends Model
         return $this->belongsToMany(Actor::class);
     }
 
-    //N:N con Director
-    public function directors()
+    //1:N con Director
+    public function director()
     {
-        return $this->belongsToMany(Director::class);
+        return $this->belongsTo(Director::class);
     }
 }

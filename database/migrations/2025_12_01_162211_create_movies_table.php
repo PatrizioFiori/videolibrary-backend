@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("title");
             $table->string("description");
             $table->date("release_year");
-            $table->foreignId("director_id")->constrained()->onDelete("cascade");
+            $table->foreignId("director_id")->nullable()->constrained()->onDelete("cascade");
             $table->timestamps();
         });
     }
