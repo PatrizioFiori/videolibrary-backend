@@ -30,7 +30,7 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "storata ";
     }
 
     /**
@@ -38,7 +38,7 @@ class MovieController extends Controller
      */
     public function show(string $id)
     {
-        $movie = Movie::with("director")->findOrFail($id); //ho bisogno un movie con id specifico
+        $movie = Movie::with("director")->findOrFail($id);
         return view("movies.show", compact("movie"));
     }
 
@@ -47,7 +47,8 @@ class MovieController extends Controller
      */
     public function edit(string $id)
     {
-        return view("movies.edit");
+        $movie = Movie::with("director")->findOrFail($id);
+        return view("movies.edit", compact("movie"));
     }
 
     /**
@@ -55,7 +56,7 @@ class MovieController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return "updata";
     }
 
     /**
@@ -63,6 +64,6 @@ class MovieController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        return "destroyata";
     }
 }
