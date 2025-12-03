@@ -3,7 +3,7 @@
 @section("title", "Inserisci nuovo film")
 
 @section("pageTitle")
-<h1>Show</h1>
+<h1 class="container">Dettaglio film- Rotta show</h1>
 @endsection
 
 @section("content")
@@ -21,10 +21,17 @@
                         {{ $movie->description }}
                     </p>
 
+                    <p class="card-text text-secondary">
+                        @foreach ($movie->genres as $genre)
+                            <span class="badge bg-primary me-1">{{ $genre->name }}</span>
+                        @endforeach
+                    </p>
+
+
                     <hr>
 
                     <p class="mb-2">
-                        <span class="badge bg-info text-dark">
+                        <span class="badge bg-info-subtle text-dark">
                             Anno: {{ $movie->release_year }}
                         </span>
                     </p>

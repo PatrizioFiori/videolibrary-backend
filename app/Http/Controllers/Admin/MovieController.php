@@ -3,67 +3,88 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Director;
+use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //ROTTA INDEX
     public function index()
     {
-        $movies = Movie::with("director")->get();
+        $movies = Movie::with("director", "genres")->get();
         return view("movies.index", compact("movies"));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view("movies.create");
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        return "storata ";
-    }
-
-    /**
-     * Display the specified resource.
-     */
+    //ROTTA SHOW 
     public function show(string $id)
     {
-        $movie = Movie::with("director")->findOrFail($id);
+        $movie = Movie::with("director", "genres")->findOrFail($id);
         return view("movies.show", compact("movie"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    //! ================================= //
+
+
+    //ROTTA CREATE 
+    public function create()
+    {
+        $directors = Director::all();
+        $genres = Genre::all();
+        return view("movies.create", compact("directors", "genres"));
+    }
+
+    // ROTTA STORE
+    public function store(Request $request)
+    {
+        $moviesData = $request->all();
+        $movie = Movie::create($moviesData);
+
+        if ($request->has("genres")) {
+            $movie->genres()->attach($request->genres);
+        }
+        return redirect()->route("admin.movies.index");
+    }
+
+
+    //! ================================= //
+
+
+
+    //ROTTA EDIT
     public function edit(string $id)
     {
         $movie = Movie::with("director")->findOrFail($id);
-        return view("movies.edit", compact("movie"));
+        $directors = Director::all();
+        $genres = Genre::all();
+
+        return view("movies.edit", compact("movie", "directors", "genres"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+
+    // ROTTA UPDATE.
+    public function update(Request $request, Movie $movie)
     {
-        return "updata";
+        //aggiorna il record con le modifiche 
+        $movie->update($request->all());
+
+        $movie->genres()->sync($request->input('genres', []));
+
+        return redirect()->route('admin.movies.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+
+
+
+    //! ================================= //
+
+    //ROTTA DESTROY
+    public function destroy(Movie $movie)
     {
-        return "destroyata";
+        $movie->delete();
+        return redirect()->route("admin.movies.index");
     }
 }

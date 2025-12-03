@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
 
-    protected $fillable = ["title", "description", "release_year"];
+    protected $fillable = ["title", "description", "release_year", "director_id"];
 
     //N:N con Genre
     public function genres()
